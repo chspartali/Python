@@ -1,0 +1,246 @@
+# Reverse_dna_seq
+def Reverse(Pattern):
+    reversePattern = ""
+    for char in Pattern:
+        reversePattern = char + reversePattern
+    return reversePattern
+
+dna = "AAAACCCGGT"
+Reverse(dna)
+#Complementary_Dna_seq_telling_the_programm_what_the_pairs_are
+def Complement(Pattern):
+    basepairs = {"A":"T", "G":"C", "T":"A", "C":"G"}
+    complement = ""
+    for base in Pattern:
+        complement += basepairs.get(base)
+    return complement
+#Other_way
+ Input:  A DNA string Pattern
+# Output: The reverse complement of Pattern
+def ReverseComplement(Pattern):   
+    return Complement(Reverse(Pattern))
+
+# Copy your Reverse() function here.
+def Reverse(Pattern):
+    # your code here
+    return Pattern[::-1]
+
+# Copy your Complement() function here.
+def Complement(Pattern):
+    # your code here
+    dict = {'A':'T','G':'C','T':'A','C':'G'}
+    return "".join(dict[i] for i in Pattern)
+    
+    #finding_the_places_od_a_pattern
+    Solution:
+
+
+#Chunyu Zhao 20150902
+
+import sys
+
+def pattern_count(text,pattern):
+	count = 0
+	for i in range(len(text)-len(pattern)+1):
+		if text[i:i+len(pattern)] == pattern:
+			count +=1
+	return count
+
+if __name__ == '__main__':
+	if len(sys.argv) == 2:
+		filename = sys.argv[1]
+		with open(filename) as f:
+			lines = f.read().splitlines()
+		text = lines[0]
+		pattern = lines[1]
+	else:
+		text = 'GCGCG'
+		pattern = 'GCG'
+		text = 'CGCGATACGTTACATACATGATAGACCGCGCGCGATCATATCGCGATTATC'
+		pattern = 'CGCG'
+	
+	count = pattern_count(text,pattern)
+	print count
+Goal:
+
+Initially positions is a blank list. Our goal is to read through the sequence(Genome) for the length of the Pattern and if the read matches the Pattern, it has to return the starting position of the read (i) to the empty list(Positions[ ])
+
+Step by Step explanation : 
+
+Genome = GATATATGCATATACTT
+
+Positions = 012345678910111213141516 ---> These are the values 'i' will take
+
+Pattern = ATAT
+
+len(Pattern) = 4
+
+len(Genome)= 17
+
+So, first we define a function which does what is required and returns a result
+
+def PatternMatching(Pattern, Genome):
+
+Next is having an empty list which will display the positions where we are getting a match to the Pattern. Why list? And not any string or integer variable? Because of the way the output looks. 1 3 9. Any other variable type may end up adding these numbers. Hence we start off with an empty list.
+
+positions = [ ] # output variable
+
+Next is to read through the entire Genome in a specific reading frame which is equal to the length of the pattern.
+
+for i in range(len(Genome)-len(Pattern)+1):
+
+   --> This tells us that i starts from 0 and goes upto 17-4 +1 = 14. We know that we always increment the range by 1 since it always goes upto 1 unit less. In this case, i takes values from 0 to 13. Check the Genome with positions. You will see that the last bunch of bases which are 4 units long start at position 13.
+
+The next step is to read through the bases in the genome  in a specific reading frame which is equal to the length of the pattern and compare the bases in the genome to the given Pattern.
+
+        if Genome[i:i+len(Pattern)] == Pattern:
+              positions.append(i)
+   return positions
+
+So here, starting from position i=0, this will be something like if Genome[0 : 4] == Pattern: 
+
+[0:4] means characters at positions 0,1,2,3 which is GATA
+
+Then it compares if GATA == ATAT
+
+If "True", positions[ ] has to be updated with the corresponding starting position (the value of i). In this case, result of comparison is "False". So positions[ ] is still blank and the function returns an empty list.
+
+Let's see what happens at the very next iteration. Now i=1
+
+         if Genome[i:i+len(Pattern)] == Pattern:
+             positions.append(i)
+    return positions
+
+So the program is going to check if the characters/bases at Genome[1:5] == Pattern
+
+[1:5] means characters at positions 1,2,3,4 which is ATAT
+
+Next it compares ATAT == ATAT. The result of comparison is "True"
+
+Now the list positions[ ] has to be updated with the starting position which is the value of i, 1 in this case.
+
+The function returns an updated list with one value [1]. Note: return statement is aligned with the for loop and not the if statement. This makes a lot of difference to the program.
+
+The program moves to next iteration. i = 2 and so on up to i=13.
+
+Final Output will be something like : 
+
+1 3 9
+#oTHER_WAY
+Copy your PatternMatching function below this line.
+
+# The following lines will automatically read in the Vibrio cholerae genome for you and store it in a variable named v_cholerae
+import sys                             # needed to read the genome
+input = sys.stdin.read().splitlines() #
+v_cholerae = input[1]                 # store the genome as 'v_cholerae'
+
+
+# Call PatternMatching with Pattern equal to "CTTGATCAT" and Genome equal to v_cholerae,
+# and store the output as a variable called positions
+
+def PatternMatching(Pattern, Genome):
+    positions = [] # output variable
+    k = len(Pattern)
+    n= len(Genome)
+    for i in range(n-k+1):
+        if Genome[i:i+k]==Pattern:
+            positions.append(i)
+ 
+    # your code here
+    return positions
+
+print(PatternMatching("CTTGATCAT",v_cholerae))
+
+# print the positions variable
+#How_many_combined_occurrences _of "ATGATCAAG"_and_"CTTGATCAT"_can_you_find_in__this_region?
+def PatternCount(Pattern,Genome):
+    Occurence_Positions=[]
+    n = len (Genome)
+    k = len (Pattern)
+    for i in range(n-k+1):
+        if Genome[i:i+k]==Pattern:
+            Occurence_Positions.append(i)
+    return Occurence_Positions
+           
+
+# On the following line, create a variable called Text that is equal to the oriC region from T petrophila
+
+T_Petrophilia_Ori="AACTCTATACCTCCTTTTTGTCGAATTTGTGTGATTTATAGAGAAAATCTTATTAACTGAAACTAAAATGGTAGGTTTGGTGGTAGGTTTTGTGTACATTTTGTAGTATCTGATTTTTAATTACATACCGTATATTGTATTAAATTGACGAACAATTGCATGGAATTGAATATATGCAAAACAAACCTACCACCAAACTCTGTATTGACCATTTTAGGACAACTTCAGGGTGGTAGGTTTCTGAAGCTCTCATCAATAGACTATTTTAGTCTTTACAAACAATATTACCGTTCAGATTCAAGATTCTACAACGCTGTTTTAATGGGCGTTGCAGAAAACTTACCACCTAAAATCCAGTATCCAAGCCGATTTCAGAGAAACCTACCACTTACCTACCACTTACCTACCACCCGGGTGGTAAGTTGCAGACATTATTAAAAACCTCATCAGAAGCTTGTTCAAAAATTTCAATACTCGAAACCTACCACCTGCGTCCCCTATTATTTACTACTACTAATAATAGCAGTATAATTGATCTGA"
+
+# On the following line, create a variable called count_1 that is equal to the number of times
+# that "ATGATCAAG" occurs in Text.
+
+count_1= len(PatternCount("ATGATCAAG",T_Petrophilia_Ori))
+
+# On the following line, create a variable called count_2 that is equal to the number of times
+# that "CTTGATCAT" occurs in Text.
+
+count_2= len(PatternCount("CTTGATCAT",T_Petrophilia_Ori))
+
+# Finally, print the sum of count_1 and count_2
+
+print (count_1+count_2)
+
+
+#OTHER_WAY
+
+# Input: Strings Genome and symbol
+# Output: SymbolArray(Genome, symbol)
+symbol = "A"
+Genome = "AAAAGGGG"
+def SymbolArray(Genome, symbol):
+    array = {}
+    n = len(Genome)
+    ExtendedGenome = Genome + Genome[0:n//2]
+    for i in range(n):
+        array[i] = PatternCount(symbol, ExtendedGenome[i:i+(n//2)])
+    return array
+    # type your code here
+
+
+# Reproduce the PatternCount function here.
+def PatternCount(symbol,ExtendedGenome ):
+    count = 0
+    for i in range(0,len(ExtendedGenome)-len(symbol)+1):
+        if ExtendedGenome[i:i+len(symbol)] == symbol:
+            count = count+1
+    return count
+    # type your code here
+    
+    
+    
+    # Input:  Strings Genome and symbol
+# Output: FasterSymbolArray(Genome, symbol)
+def FasterSymbolArray(Genome, symbol):
+    array = {}
+    n = len(Genome)
+    ExtendedGenome = Genome + Genome[0:n//2]
+    # look at the first half of Genome to compute first array value
+    array[0] = PatternCount(symbol, Genome[0:n//2])
+    for i in range(1, n):
+        # start by setting the current array value equal to the previous array value
+        array[i] = array[i-1]
+        # the current array value can differ from the previous array value by at most 1
+        if ExtendedGenome[i-1] == symbol:
+            array[i] = array[i]-1
+        if ExtendedGenome[i+(n//2)-1] == symbol:
+            array[i] = array[i]+1
+    return array
+
+# Input:  Strings Text and Pattern
+# Output: The number of times Pattern appears in Text
+# HINT:   This code should be identical to when you last implemented PatternCount
+def PatternCount(Pattern, Text):
+    count = 0 # output variable
+    for i in range(0,len(Text)-len(Pattern)+1):
+        if Text[i:i+len(Pattern)]==Pattern:
+            count+=1
+    return count
+
+
+### DO NOT MODIFY THE CODE BELOW THIS LINE ###
+import sys
+lines = sys.stdin.read().splitlines()
+print(FasterSymbolArray(lines[0],lines[1]))
+
+
