@@ -1,0 +1,88 @@
+#Minimum_Skew_Problem: Find_a_position_in_a_genome_where_the_skew_diagram_attains_a_minimum.
+   
+    def SkewArray(Genome):
+    array = [0]
+    Skew = 0
+    for i in Genome:
+        if i == 'A' or i == 'T':
+            Skew += 0
+            array.append(Skew)
+        if i == 'C':
+            Skew -= 1
+            array.append(Skew)
+        if i == 'G':
+            Skew += 1
+            array.append(Skew)
+    return array
+
+def MinimumSkew(Genome):
+    array = SkewArray(Genome)
+    positions = []
+    count = 0
+    minarray = min(array)
+    for i in array:
+        if i == minarray:
+            positions.append(count)
+        count +=1
+    return positions
+    
+    #Compute_the_Hamming_distance_between_two_strings
+     #Input:  Two strings p and q
+# Output: An integer value representing the Hamming Distance between p and q.
+def HammingDistance(p, q):
+    # your code here
+    count=0
+    i =0
+    while(i<len(p)):
+        if (p[i]!=q[i]):
+            count=count+1
+        i= i+1  
+    return count
+    
+    #OTHERWAY
+    def ApproximatePatternMatching(Text, Pattern, d):
+    positions = [] # initializing list of positions
+    for i in range(len(Text)-len(Pattern)+1):
+        if HammingDistance(Text[i:i+len(Pattern)], Pattern) <= d:
+            positions.append(i)
+    return positions
+#range is modified like this because if is it just length of the bigger text, pattern will keep sliding along with empty letters, adding more to the list of positions
+
+def HammingDistance(p, q):
+    count = 0
+    for i in range(len(p)):
+        if p[i] != q[i]:
+            count += 1
+    return count
+    
+    #cOMPINATION_OF_THE_TWO_WAYS
+    def ApproximatePatternCount(Pattern, Text, d):
+    count = 0 # initialize count variable
+    for i in range(len(Text)-len(Pattern)+1):
+        if HammingDistance(Pattern, Text[i:i+len(Pattern)]) <= d:
+            count += 1
+    return count
+#same thing as the pattern matching before, but it is replaced by count
+
+def HammingDistance(p, q):
+    count = 0
+    for i in range(len(p)):
+        if p[i] != q[i]:
+            count += 1
+    return count
+
+### DO NOT MODIFY THE CODE BELOW THIS LINE ###
+import sys
+lines = sys.stdin.read().splitlines()
+print(ApproximatePatternCount(lines[0],lines[1],int(lines[2])))
+
+#here is my pattern matching for reference. range is set like that because it will continue matching with the empty letters at the end of the long text
+
+def ApproximatePatternMatching(Text, Pattern, d):
+    positions = [] # initializing list of positions
+    for i in range(len(Text)-len(Pattern)+1):
+        if HammingDistance(Text[i:i+len(Pattern)], Pattern) <= d:
+            positions.append(i)
+    return positions
+
+
